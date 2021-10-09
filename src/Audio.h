@@ -124,8 +124,8 @@ public:
     uint32_t getReadPos();                      // read position relative to the beginning
     void     resetBuffer();                     // restore defaults
 
-protected:
-    const size_t m_buffSizePSRAM    = 300000; // most webstreams limit the advance to 100...300Kbytes
+protected:							  
+    const size_t m_buffSizePSRAM    = 3000000;//300000; // most webstreams limit the advance to 100...300Kbytes
     const size_t m_buffSizeRAM      = 1600 * 5;
     size_t       m_buffSize         = 0;
     size_t       m_freeSpace        = 0;
@@ -150,9 +150,6 @@ public:
     Audio(bool internalDAC = false, i2s_dac_mode_t channelEnabled = I2S_DAC_CHANNEL_LEFT_EN); // #99
     ~Audio();
     bool connecttohost(const char* host, const char* user = "", const char* pwd = "");
-    bool connecttospeech(const char* speech, const char* lang);
-    bool connecttoFS(fs::FS &fs, const char* path);
-    bool connecttoSD(const char* path);
     bool setFileLoop(bool input);//TEST loop
     bool setAudioPlayPosition(uint16_t sec);
     bool setFilePos(uint32_t pos);
@@ -187,12 +184,12 @@ public:
     void setI2SCommFMT_LSB(bool commFMT);
 
 private:
+	
     void UTF8toASCII(char* str);
     bool latinToUTF8(char* buff, size_t bufflen);
     void httpPrint(const char* url);
     void setDefaults(); // free buffers and set defaults
     void initInBuff();
-    void processLocalFile();
     void processWebStream();
     void processPlayListData();
     void processM3U8entries(uint8_t nrOfEntries = 0, uint32_t seqNr = 0, uint8_t pos = 0, uint16_t targetDuration = 0);
@@ -357,6 +354,8 @@ private:
     const size_t    m_frameSizeAAC  = 1600;
     const size_t    m_frameSizeFLAC = 4096 * 4;
 
+
+	int 			prebuffer = 100;
     char            chbuf[512];
     char            m_lastHost[256];                // Store the last URL to a webstream
     char*           m_playlistBuff = NULL;          // stores playlistdata
