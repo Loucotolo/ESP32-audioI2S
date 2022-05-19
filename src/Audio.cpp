@@ -559,7 +559,7 @@ bool Audio::connecttohost(const char* host, bool mp3local, const char* user, con
 
   uint32_t t = millis();
   if (_client->connect(hostwoext, port, m_f_ssl ? TIMEOUT_MS_SSL : TIMEOUT_MS)) {
-    // _client->setNoDelay(true);
+    if(!m_f_ssl) _client->setNoDelay(true);
     // if(audio_info) audio_info("SSL/TLS Connected to server");
     _client->print(resp);
     uint32_t dt = millis() - t;
